@@ -1,6 +1,6 @@
 const Home: React.FC = () => {
   return (
-    <div className="flex justify-center items-center flex-col min-h-screen font-mono">
+    <div className="flex flex-col items-center justify-center min-h-screen font-mono">
       Hello Nextjs
     </div>
   )
