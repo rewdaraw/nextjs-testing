@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test": "jest --env=jsdom --verbose"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -28,5 +29,14 @@
     "babel-jest": "^27.0.2",
     "jest": "^27.0.4",
     "jest-css-modules": "^2.1.0"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/.next/",
+      "<rootDir>/node_modules/"
+    ],
+    "moduleNameMapper": {
+      "\\.(css)$": "<rootDir>/node_modules/jest-css-modules"
+    }
   }
 }
