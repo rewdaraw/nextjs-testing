@@ -11,3 +11,9 @@ export const getAllPostIds = async (): Promise<{ params: string }[]> => {
     return { params: String(post.id) }
   })
 }
+
+export const getPostData = async (id: string): Promise<IPost> => {
+  const post: IPost = await useFetch(`get-blogs/${id}`)
+
+  return post
+}
