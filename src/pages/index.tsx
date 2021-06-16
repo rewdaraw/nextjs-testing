@@ -1,10 +1,8 @@
-import { GetStaticProps } from 'next'
+import { InferGetStaticPropsType } from 'next'
 import { getAllPostsData } from '../lib/fetch'
-import { IPost } from '../types/types'
 
-interface IProps {
-  posts: IPost[]
-}
+// MEMO: InferGetStaticPropsType<typeof getStaticProps>でpropsの型を類推できる
+type IProps = InferGetStaticPropsType<typeof getStaticProps>
 
 const BlogPage: React.FC<IProps> = ({ posts }) => {
   return (
@@ -21,7 +19,7 @@ const BlogPage: React.FC<IProps> = ({ posts }) => {
 }
 export default BlogPage
 
-export const getStaticProps: GetStaticProps<IProps> = async () => {
+export const getStaticProps = async () => {
   const posts = await getAllPostsData()
 
   return {
