@@ -15,7 +15,7 @@ const Layout: React.FC<ILayout> = ({ children, title }) => {
       <header className="shadow">
         <nav className="flex items-center w-screen h-16 px-4">
           <div className="p-2 rounded hover:text-gray-500">
-            <Link href="/blog">
+            <Link href="/">
               <a data-testid="blog-nav">Blog</a>
             </Link>
           </div>

@@ -21,13 +21,13 @@ const PostDetail: React.VFC<IProps> = ({ post }) => {
               className={`px-2 py-2 m-1 text-white rounded ${
                 i === 0
                   ? 'bg-blue-500'
-                  : 1
+                  : i === 1
                   ? 'bg-gray-500'
-                  : 2
+                  : i === 2
                   ? 'bg-green-500'
-                  : 3
+                  : i === 3
                   ? 'bg-yellow-500'
-                  : 4
+                  : i === 4
                   ? 'bg-purple-500'
                   : 'bg-gray-500'
               }`}
