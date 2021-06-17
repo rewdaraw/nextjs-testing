@@ -1,0 +1,13 @@
+import React from 'react'
+import Auth from '../../components/Auth'
+import Layout from '../../components/Layout'
+
+const AdminPage = () => {
+  return (
+    <Layout title="Admin">
+      <Auth />
+    </Layout>
+  )
+}
+
+export default AdminPage
