@@ -4,11 +4,13 @@ import { IPost } from '../types/types'
 export const getAllPostsData = async (): Promise<IPost[]> =>
   await useFetch('get-blogs')
 
-export const getAllPostIds = async (): Promise<{ params: string }[]> => {
+export const getAllPostIds = async (): Promise<
+  { params: { [slug: string]: string } }[]
+> => {
   const posts: IPost[] = await useFetch('get-blogs')
 
   return posts.map((post) => {
-    return { params: String(post.id) }
+    return { params: { id: String(post.id) } }
   })
 }
 
