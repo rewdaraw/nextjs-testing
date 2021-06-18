@@ -43,7 +43,7 @@ const PostDetail: React.VFC<IProps> = ({ post }) => {
         {'by '} {post.username}
       </p>
       <Link href="/">
-        <div className="flex justify-center mt-12 cursor-pointer">
+        <div className="flex mt-12 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="w-6 h-6 mr-3"

@@ -26,7 +26,7 @@ const Layout: React.FC<ILayout> = ({ children, title }) => {
           </div>
         </nav>
       </header>
-      <main className="flex flex-col justify-center flex-1 text-center align-middle">
+      <main className="flex flex-col items-center justify-center flex-1 w-screen">
         {children}
       </main>
       <footer className="flex items-center justify-center w-screen h-16">
