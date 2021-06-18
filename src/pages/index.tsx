@@ -39,9 +39,9 @@ const BlogPage: React.FC<IProps> = ({ posts }) => {
       }
     )
     await axiosInstance
-      .delete(`${process.env.local}/delete-blog/${id}`)
-      .catch(() => {
-        throw new Error('削除リクエストに失敗しました')
+      .delete(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/delete-blog/${id}`)
+      .catch((error) => {
+        console.log(error)
       })
   }
 
@@ -49,9 +49,6 @@ const BlogPage: React.FC<IProps> = ({ posts }) => {
   useEffect(() => {
     if (cookie.get('access_token')) {
       setHasToken(true)
-    }
-    return () => {
-      // cleanup
     }
   }, [])
 
