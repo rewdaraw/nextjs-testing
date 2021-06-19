@@ -7,10 +7,17 @@ import {
 import { getAllPostIds, getPostData } from '../../lib/fetch'
 import Layout from '../../components/Layout'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 type IProps = InferGetStaticPropsType<typeof getStaticProps>
 
 const PostDetail: React.VFC<IProps> = ({ post }) => {
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   return (
     <Layout title={post.title}>
       <div>
