@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie'
+import { postData } from '../hooks/useFetch'
 
 const cookie = new Cookies()
 
@@ -14,18 +15,16 @@ const Auth: React.FC = () => {
 
   // TODO: axiosResponseに型をつける
   const login = async () => {
-    const response = await axios
-      .post(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/jwt/create/`, {
-        username,
-        password,
-      })
-      .catch((error) => {
-        setError('jwtの認証に失敗しました')
-        console.log({ error })
-      })
+    const response = await postData('jwt/create/', {
+      username,
+      password,
+    }).catch(() => {
+      setError('Loginに失敗しました')
+      console.log({ error })
+    })
 
     if (response) {
-      cookie.set('access_token', response.data.access, { path: '/' })
+      cookie.set('access_token', response.access, { path: '/' })
       router.push('/')
     }
   }
@@ -36,15 +35,13 @@ const Auth: React.FC = () => {
       login()
     } else {
       // TODO: axiosResponseに型をつける
-      const response = await axios
-        .post(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/register/`, {
-          username,
-          password,
-        })
-        .catch((error) => {
-          setError('Create userに失敗しました')
-          console.log({ error })
-        })
+      const response = await postData('register/', {
+        username,
+        password,
+      }).catch(() => {
+        setError('Create userに失敗しました')
+        console.log({ error })
+      })
 
       if (response) login()
     }

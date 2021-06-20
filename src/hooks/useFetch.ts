@@ -10,3 +10,11 @@ export const getData = async (uri: string) => {
       throw new Error('データ取得に失敗しました')
     })
 }
+
+export const postData = async (uri: string, data: any) => {
+  return await axios
+    .post(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/${uri}`, data)
+    .then((response) => {
+      return response.data
+    })
+}
