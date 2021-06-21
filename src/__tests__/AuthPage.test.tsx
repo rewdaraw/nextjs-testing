@@ -1,7 +1,12 @@
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 
-import { initTestHelpers } from 'next-page-tester'
+import '@testing-library/jest-dom'
+
+import { initTestHelpers, getPage } from 'next-page-tester'
+
+import { screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 initTestHelpers()
 // テストファイルからは環境変数を読み込めないためここで代入
@@ -12,7 +17,7 @@ process.env.NEXT_PUBLIC_RESTAPI_URL = 'http://127.0.0.1:8000/api'
 const handlers = [
   // login時の/create/jwt/エンドポイントの成功レスポンスのモック
   rest.post(
-    `${process.env.NEXT_PUBLIC_RESTAPI_URL}/create/jwt/`,
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}/jwt/create/`,
     (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({ access: 'xxx123' }))
     }
@@ -84,6 +89,20 @@ afterAll(() => server.close())
 // 3. テストケースの作成
 describe('Admin pageのテスト', () => {
   it('Should route to index page when login succeeded', async () => {
-    // 
+    // まずはadmin pageを取得、入力サブミットの結果自動でblog一覧ページに遷移するかどうか
+    // admin pageを取得して描画
+    const { render } = await getPage({
+      route: '/admin',
+    })
+    render()
+    // Loginという文字があること
+    expect(await screen.findByText('Login')).toBeInTheDocument()
+    // username, passwordを入力
+    userEvent.type(screen.getByPlaceholderText('Username'), 'user1')
+    userEvent.type(screen.getByPlaceholderText('Password'), 'user1')
+    // submitする
+    userEvent.click(screen.getByText('Login with JWT'))
+    // Blog pageという文字があること
+    expect(await screen.findByText('Blog page')).toBeInTheDocument()
   })
 })
