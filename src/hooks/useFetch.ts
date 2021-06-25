@@ -6,11 +6,7 @@ export const postData = async (uri: string, data: any) => {
     })
 }
 
-import axios, {
-  AxiosResponse,
-  AxiosError,
-  Method,
-} from 'axios'
+import axios, { AxiosResponse, AxiosError, Method } from 'axios'
 interface IUseAxiosParams {
   url: string
   method: Method
@@ -35,9 +31,12 @@ export const useServerAxios = async <T>({
   })
 
   const res = await axiosInstance[method](url, data, headers)
-    .catch((error: AxiosError<T>) => {
-      return error
-    })
+  // .catch(
+  //   (error: AxiosError<T>) => {
+  //     console.log({ error })
+  //     return error
+  //   }
+  // )
 
   return res
 }

@@ -1,8 +1,9 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie'
 import { postData } from '../hooks/useFetch'
+import { useServerAxios } from '../hooks/useFetch'
 
 const cookie = new Cookies()
 
@@ -13,19 +14,28 @@ const Auth: React.FC = () => {
   const [error, setError] = useState('')
   const router = useRouter()
 
-  // TODO: axiosResponseに型をつける
   const login = async () => {
-    const response = await postData('jwt/create/', {
-      username,
-      password,
-    }).catch(() => {
+    const response = await useServerAxios({
+      url: 'jwt/create/',
+      method: 'post',
+      data: { username, password },
+    }).catch((error) => {
       setError('Loginに失敗しました')
       console.log({ error })
     })
 
     if (response) {
-      cookie.set('access_token', response.access, { path: '/' })
-      router.push('/')
+      // type guard
+      const isLoginSuccess = (
+        res: any
+      ): res is AxiosResponse<{ access: string; refresh: string }> => {
+        return res.data.access
+      }
+
+      if (isLoginSuccess(response)) {
+        cookie.set('access_token', response.data.access, { path: '/' })
+        router.push('/')
+      }
     }
   }
 
