@@ -1,11 +1,3 @@
-export const postData = async (uri: string, data: any) => {
-  return await axios
-    .post(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/${uri}`, data)
-    .then((response) => {
-      return response.data
-    })
-}
-
 import axios, { AxiosResponse, AxiosError, Method } from 'axios'
 interface IUseAxiosParams {
   url: string

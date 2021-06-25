@@ -2,7 +2,6 @@ import axios, { AxiosResponse } from 'axios'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie'
-import { postData } from '../hooks/useFetch'
 import { useServerAxios } from '../hooks/useFetch'
 
 const cookie = new Cookies()
@@ -44,16 +43,25 @@ const Auth: React.FC = () => {
     if (isLogin) {
       login()
     } else {
-      // TODO: axiosResponseに型をつける
-      const response = await postData('register/', {
-        username,
-        password,
+      const response = await useServerAxios({
+        url: 'register/',
+        method: 'post',
+        data: { username, password },
       }).catch(() => {
         setError('Create userに失敗しました')
         console.log({ error })
       })
 
-      if (response) login()
+      if (response) {
+        // type guard
+        const isAuthSuccess = (
+          res: any
+        ): res is AxiosResponse<{ username: string; password: string }> => {
+          return res.data.username
+        }
+
+        if (isAuthSuccess) login()
+      }
     }
   }
 
