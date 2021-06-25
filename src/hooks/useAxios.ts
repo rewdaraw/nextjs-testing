@@ -28,7 +28,7 @@ export const useAxios = <T>({
     baseURL: `${process.env.NEXT_PUBLIC_RESTAPI_URL}`,
     headers: {
       'Content-Type': 'application/json',
-      headers,
+      ...headers,
     },
     timeout: 1000,
   })

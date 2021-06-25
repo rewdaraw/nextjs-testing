@@ -2,7 +2,7 @@ import { InferGetStaticPropsType } from 'next'
 import { getAllPostsData } from '../lib/fetch'
 import Cookies from 'universal-cookie'
 import { useState } from 'react'
-import axios from 'axios'
+import { useServerAxios } from '../hooks/useFetch'
 import { useEffect } from 'react'
 import Layout from '../components/Layout'
 import Link from 'next/link'
@@ -10,7 +10,6 @@ import Link from 'next/link'
 // MEMO: InferGetStaticPropsType<typeof getStaticProps>でpropsの型を類推できる
 type IProps = InferGetStaticPropsType<typeof getStaticProps>
 
-// TODO: 外部に切り出しコンポーネント毎にnew Cookies()しなくていいようにする
 const cookie = new Cookies()
 
 const BlogPage: React.FC<IProps> = ({ posts }) => {
@@ -22,30 +21,17 @@ const BlogPage: React.FC<IProps> = ({ posts }) => {
     setHasToken(false)
   }
 
-  // TODO: 外部に切り出しaxiosInstance呼ぶだけにする
   const deletePost = async (id: number) => {
-    const axiosInstance = axios.create({
-      baseURL: `${process.env.NEXT_PUBLIC_RESTAPI_URL}`,
+    await useServerAxios({
+      url: `delete-blog/${id}`,
+      method: 'delete',
+      data: null,
+      headers: { Authorization: `JWT ${cookie.get('access_token')}` },
+    }).catch((error) => {
+      console.log(error)
     })
-    axiosInstance.interceptors.request.use(
-      (config) => {
-        if (cookie.get('access_token')) {
-          config.headers.Authorization = `JWT ${cookie.get('access_token')}`
-          return config
-        }
-      },
-      function (error) {
-        return Promise.reject(error)
-      }
-    )
-    await axiosInstance
-      .delete(`${process.env.NEXT_PUBLIC_RESTAPI_URL}/delete-blog/${id}`)
-      .catch((error) => {
-        console.log(error)
-      })
   }
 
-  // cookieが存在するかしないかの判定
   useEffect(() => {
     if (cookie.get('access_token')) {
       setHasToken(true)
