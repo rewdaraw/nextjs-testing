@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import Cookies from 'universal-cookie'
-import { useServerAxios } from '../hooks/useFetch'
+import { useAxios } from '../hooks/useAxios'
 
 const cookie = new Cookies()
 
@@ -14,7 +14,7 @@ const Auth: React.FC = () => {
   const router = useRouter()
 
   const login = async () => {
-    const response = await useServerAxios({
+    const response = await useAxios({
       url: 'jwt/create/',
       method: 'post',
       data: { username, password },
@@ -43,7 +43,7 @@ const Auth: React.FC = () => {
     if (isLogin) {
       login()
     } else {
-      const response = await useServerAxios({
+      const response = await useAxios({
         url: 'register/',
         method: 'post',
         data: { username, password },

@@ -1,11 +1,11 @@
 import { IPost } from '../types/types'
-import { useServerAxios } from '../hooks/useFetch'
+import { useAxios } from '../hooks/useAxios'
 import { AxiosResponse } from 'axios'
 
 export const getAllPostsData = async () => {
-  const res = await useServerAxios<IPost[]>({
-    url: "get-blogs",
-    method: "get"
+  const res = await useAxios<IPost[]>({
+    url: 'get-blogs',
+    method: 'get',
   })
 
   // type guard
@@ -19,7 +19,7 @@ export const getAllPostsData = async () => {
 }
 
 export const getAllPostIds = async () => {
-  const res = await useServerAxios<IPost[]>({
+  const res = await useAxios<IPost[]>({
     url: `get-blogs`,
     method: 'get',
   })
@@ -37,7 +37,7 @@ export const getAllPostIds = async () => {
 }
 
 export const getPostData = async (id: string) => {
-  const res = await useServerAxios<IPost>({
+  const res = await useAxios<IPost>({
     url: `get-blogs/${id}`,
     method: 'get',
   })

@@ -2,7 +2,7 @@ import { InferGetStaticPropsType } from 'next'
 import { getAllPostsData } from '../lib/fetch'
 import Cookies from 'universal-cookie'
 import { useState } from 'react'
-import { useServerAxios } from '../hooks/useFetch'
+import { useAxios } from '../hooks/useAxios'
 import { useEffect } from 'react'
 import Layout from '../components/Layout'
 import Link from 'next/link'
@@ -22,7 +22,7 @@ const BlogPage: React.FC<IProps> = ({ posts }) => {
   }
 
   const deletePost = async (id: number) => {
-    await useServerAxios({
+    await useAxios({
       url: `delete-blog/${id}`,
       method: 'delete',
       data: null,
