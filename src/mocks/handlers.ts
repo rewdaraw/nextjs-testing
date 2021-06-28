@@ -63,4 +63,56 @@ export const handlers = [
       )
     }
   ),
+  // Blog詳細取得時の/get-blogs/1エンドポイントの成功レスポンスのモック
+  rest.get(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}/get-blogs/1`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          id: 1,
+          title: 'mock-title1',
+          content: 'mock-content1',
+          username: 'mock-username1',
+          tags: [
+            {
+              id: 1,
+              name: 'mock-tagname1',
+            },
+            {
+              id: 2,
+              name: 'mock-tagname2',
+            },
+          ],
+          created_at: '2011-11-11 11:11:11',
+        })
+      )
+    }
+  ),
+  // Blog詳細取得時の/get-blogs/2エンドポイントの成功レスポンスのモック
+  rest.get(
+    `${process.env.NEXT_PUBLIC_RESTAPI_URL}/get-blogs/2`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          id: 2,
+          title: 'mock-title2',
+          content: 'mock-content2',
+          username: 'mock-username2',
+          tags: [
+            {
+              id: 3,
+              name: 'mock-tagname3',
+            },
+            {
+              id: 4,
+              name: 'mock-tagname4',
+            },
+          ],
+          created_at: '2012-12-12 12:12:12',
+        })
+      )
+    }
+  ),
 ]
