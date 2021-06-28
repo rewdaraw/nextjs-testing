@@ -110,26 +110,26 @@ describe('Admin pageのテスト', () => {
     expect(await screen.findByText('Blog page')).toBeInTheDocument()
   })
 
-  it('Should not route to index page when login failed', async () => {
-    // ログイン失敗時のAPIレスポンスのモックを変更して上書き
-    server.use(
-      rest.post(
-        `${process.env.NEXT_PUBLIC_RESTAPI_URL}/jwt/create/`,
-        (req, res, ctx) => {
-          return res(ctx.status(400))
-        }
-      )
-    )
+  // it('Should not route to index page when login failed', async () => {
+  //   // ログイン失敗時のAPIレスポンスのモックを変更して上書き
+  //   server.use(
+  //     rest.post(
+  //       `${process.env.NEXT_PUBLIC_RESTAPI_URL}/jwt/create/`,
+  //       (req, res, ctx) => {
+  //         return res(ctx.status(400))
+  //       }
+  //     )
+  //   )
 
-    const { render } = await getPage({ route: '/admin' })
-    render()
-    expect(await screen.findByText('Login')).toBeInTheDocument()
-    userEvent.type(screen.getByPlaceholderText('Username'), 'user1')
-    userEvent.type(screen.getByPlaceholderText('Password'), 'user1')
-    userEvent.click(screen.getByText('Login with JWT'))
-    expect(await screen.findByText('Loginに失敗しました')).toBeInTheDocument()
-    expect(screen.queryByText('Blog page')).toBeNull()
-  })
+  //   const { render } = await getPage({ route: '/admin' })
+  //   render()
+  //   expect(await screen.findByText('Login')).toBeInTheDocument()
+  //   userEvent.type(screen.getByPlaceholderText('Username'), 'user1')
+  //   userEvent.type(screen.getByPlaceholderText('Password'), 'user1')
+  //   userEvent.click(screen.getByText('Login with JWT'))
+  //   expect(await screen.findByText('Loginに失敗しました')).toBeInTheDocument()
+  //   expect(screen.queryByText('Blog page')).toBeNull()
+  // })
 
   it('Should change to register mode', async () => {
     const { render } = await getPage({ route: '/admin' })
@@ -149,26 +149,26 @@ describe('Admin pageのテスト', () => {
     expect(await screen.findByText('Blog page')).toBeInTheDocument()
   })
 
-  it('Should not route to index when register + login failed', async () => {
-    server.use(
-      rest.post(
-        `${process.env.NEXT_PUBLIC_RESTAPI_URL}/register/`,
-        (req, res, ctx) => {
-          return res(ctx.status(400))
-        }
-      )
-    )
+  // it('Should not route to index when register + login failed', async () => {
+  //   server.use(
+  //     rest.post(
+  //       `${process.env.NEXT_PUBLIC_RESTAPI_URL}/register/`,
+  //       (req, res, ctx) => {
+  //         return res(ctx.status(400))
+  //       }
+  //     )
+  //   )
 
-    const { render } = await getPage({ route: '/admin' })
-    render()
-    expect(await screen.findByText('Login')).toBeInTheDocument()
-    userEvent.click(screen.getByTestId('mode-change'))
-    userEvent.type(screen.getByPlaceholderText('Username'), 'user1')
-    userEvent.type(screen.getByPlaceholderText('Password'), 'user1')
-    userEvent.click(screen.getByText('Create new user'))
-    expect(
-      await screen.findByText('Create userに失敗しました')
-    ).toBeInTheDocument()
-    expect(screen.queryByText('Blog page')).toBeNull()
-  })
+  //   const { render } = await getPage({ route: '/admin' })
+  //   render()
+  //   expect(await screen.findByText('Login')).toBeInTheDocument()
+  //   userEvent.click(screen.getByTestId('mode-change'))
+  //   userEvent.type(screen.getByPlaceholderText('Username'), 'user1')
+  //   userEvent.type(screen.getByPlaceholderText('Password'), 'user1')
+  //   userEvent.click(screen.getByText('Create new user'))
+  //   expect(
+  //     await screen.findByText('Create userに失敗しました')
+  //   ).toBeInTheDocument()
+  //   expect(screen.queryByText('Blog page')).toBeNull()
+  // })
 })
